@@ -29,61 +29,67 @@ module Bigcommerce
     end
   end
 
-  class Request < Module
-    def initialize(uri)
-      @uri = uri
+  class Request
+    # def included(base)
+    #   base.extend ClassMethods
+    #   path_builder = PathBuilder.new @uri
+    #   base.define_singleton_method :path do
+    #     path_builder
+    #   end
+    # end
+
+    def initialize
+      @config = Hashie::Mash.new
+      yield(@config) if block_given?
     end
 
-    def included(base)
-      base.extend ClassMethods
-      path_builder = PathBuilder.new @uri
-      base.define_singleton_method :path do
-        path_builder
-      end
+    def get(path, params = nil)
+      parse raw_request(:get, path, params).body
     end
 
-    module ClassMethods
-      def get(path, params = nil)
-        response = raw_request(:get, path, params)
-        build_response_object response
-      end
+    def delete(path)
+      parse raw_request(:delete, path).body
+    end
 
-      def delete(path)
-        response = raw_request(:delete, path)
-        response.body
-      end
+    def post(path, params)
+      parse raw_request(:post, path, params).body
+    end
 
-      def post(path, params)
-        response = raw_request(:post, path, params)
-        build_response_object response
-      end
+    def put(path, params)
+      parse raw_request(:put, path, params).body
+    end
 
-      def put(path, params)
-        response = raw_request(:put, path, params)
-        build_response_object response
-      end
+    def raw_request(method, path, params = nil)
+      response = connection.send(method, path.to_s, params)
+      Bigcommerce.api_limit = response.headers['X-BC-ApiLimit-Remaining']
 
-      def raw_request(method, path, params = nil)
-        response = Bigcommerce.api.send(method, path.to_s, params)
-        Bigcommerce.api_limit = response.headers['X-BC-ApiLimit-Remaining']
-        response
-      end
+      response
+    end
 
-      private
-
-      def build_response_object(response)
-        json = parse response.body
-        if json.is_a? Array
-          json.map { |obj| new obj }
+    def connection
+      ssl_options = config.ssl if config.auth == 'legacy'
+      headers = Bigcommerce::HEADERS
+      @connection ||= Faraday.new(url: build_url, ssl: ssl_options) do |conn|
+        conn.request :json
+        if config.auth == 'legacy'
+          conn.basic_auth(config.username, config.api_key)
         else
-          new json
+          headers.merge!('X-Auth-Client' => config.client_id, 'X-Auth-Token' => config.access_token)
         end
+        conn.headers = headers
       end
+    end
 
-      def parse(json)
-        return [] if json.empty?
-        JSON.parse(json, symbolize_names: true)
-      end
+    private
+
+    def build_url
+      return config.url if config.auth == 'legacy'
+      "https://api.bigcommerce.com/stores/#{config.store_hash}/v2"
+    end
+
+    def parse(json)
+      return [] if json.empty?
+      JSON.parse(json, symbolize_names: true)
     end
   end
 end
