@@ -4,9 +4,8 @@
 
 module Bigcommerce
   class State < Resource
-    include Bigcommerce::SubresourceActions.new(
-      uri: 'countries/%d/states/%d',
-      disable: [:create, :update, :destroy, :destroy_all])
+    include SubresourceActions
+    use_endpoint 'countries/%d/states/%d'
 
     property :id
     property :count
@@ -14,12 +13,12 @@ module Bigcommerce
     property :state_abbreviation
     property :country_id
 
-    def self.count(country_id)
-      get "countries/#{country_id}/states/count"
-    end
-
-    def self.count_all
-      get 'countries/states/count'
-    end
+    # def self.count(country_id)
+    #   get "countries/#{country_id}/states/count"
+    # end
+    #
+    # def self.count_all
+    #   get 'countries/states/count'
+    # end
   end
 end

@@ -4,9 +4,7 @@
 
 module Bigcommerce
   class Country < Resource
-    include Bigcommerce::ResourceActions.new(
-      uri: 'countries/%d',
-      disable: [:create, :update, :destroy, :destroy_all])
+    use_endpoint 'countries'
 
     property :id
     property :count
@@ -15,8 +13,8 @@ module Bigcommerce
     property :country_iso3
     property :states
 
-    def self.count
-      get 'countries/count'
-    end
+    # def self.count
+    #   get 'countries/count'
+    # end
   end
 end
