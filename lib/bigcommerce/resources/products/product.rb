@@ -4,7 +4,8 @@
 
 module Bigcommerce
   class Product < Resource
-    include Bigcommerce::ResourceActions.new uri: 'products/%d'
+    # include Bigcommerce::ResourceActions.new uri: 'products/%d'
+    use_endpoint 'products'
 
     property :id
     property :count
@@ -90,8 +91,8 @@ module Bigcommerce
     property :avalara_product_tax_code
     property :primary_image
 
-    def self.count(params = {})
-      get 'products/count', params
-    end
+    # def self.count(params = {})
+    #   self.class.build_response_object(http_transport.get "#{self.class.endpoint}/count", params)
+    # end
   end
 end

@@ -4,7 +4,7 @@
 
 module Bigcommerce
   class Customer < Resource
-    include Bigcommerce::ResourceActions.new uri: 'customers/%d'
+    use_endpoint 'customers'
 
     property :id
     property :_authentication
@@ -23,8 +23,8 @@ module Bigcommerce
     property :addresses
     property :tax_exempt_category
 
-    def self.count
-      get 'customers/count'
-    end
+    # def self.count
+    #   get 'customers/count'
+    # end
   end
 end

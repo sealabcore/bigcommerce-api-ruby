@@ -67,9 +67,8 @@ module Bigcommerce
     property :shipping_addresses
     property :coupons
 
-    def orders_count(params = {})
-      p "#{self.class.endpoint}/count"
-      self.class.build_response_object(http_transport.get "#{self.class.endpoint}/count", params)
-    end
+    # def orders_count(params = {})
+    #   self.class.build_response_object(http_transport.get "#{self.class.endpoint}/count", params)
+    # end
   end
 end

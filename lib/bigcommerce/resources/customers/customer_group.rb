@@ -5,7 +5,7 @@
 
 module Bigcommerce
   class CustomerGroup < Resource
-    include Bigcommerce::ResourceActions.new uri: 'customer_groups/%d'
+    use_endpoint 'customer_groups'
 
     property :id
     property :name
@@ -14,8 +14,8 @@ module Bigcommerce
     property :category_access
     property :discount_rules
 
-    def self.count
-      get 'customer_groups/count'
-    end
+    # def self.count
+    #   get 'customer_groups/count'
+    # end
   end
 end

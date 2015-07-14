@@ -4,7 +4,8 @@
 
 module Bigcommerce
   class CustomerAddress < Resource
-    include Bigcommerce::SubresourceActions.new uri: 'customers/%d/addresses/%d'
+    include SubresourceActions
+    use_endpoint 'customers/%d/addresses/%d'
 
     property :id
     property :customer_id
@@ -23,12 +24,12 @@ module Bigcommerce
     property :phone
     property :adderss_type
 
-    def self.count_all
-      get 'customers/addresses/count'
-    end
-
-    def self.count(customer_id)
-      get "customers/#{customer_id}/addresses/count"
-    end
+    # def self.count_all
+    #   get 'customers/addresses/count'
+    # end
+    #
+    # def self.count(customer_id)
+    #   get "customers/#{customer_id}/addresses/count"
+    # end
   end
 end
