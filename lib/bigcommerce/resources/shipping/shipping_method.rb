@@ -4,9 +4,7 @@
 
 module Bigcommerce
   class ShippingMethod < Resource
-    include Bigcommerce::ResourceActions.new(
-      uri: 'shipping/methods/%d',
-      disable: [:create, :update, :destroy, :destroy_all])
+    use_endpoint 'shipping/methods'
 
     property :id
     property :name

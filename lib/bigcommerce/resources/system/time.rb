@@ -4,12 +4,12 @@
 
 module Bigcommerce
   class System < Resource
-    include Bigcommerce::Request.new 'time'
+    use_endpoint 'time'
 
     property :time
 
-    def self.time
-      get path.build
+    def time
+      all
     end
   end
 end
