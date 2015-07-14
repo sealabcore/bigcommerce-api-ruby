@@ -5,7 +5,7 @@
 
 module Bigcommerce
   class Brand < Resource
-    include Bigcommerce::ResourceActions.new uri: 'brands/%d'
+    use_endpoint 'brands'
 
     property :id
     property :name
@@ -16,8 +16,8 @@ module Bigcommerce
     property :image_file
     property :search_keywords
 
-    def self.count
-      get 'brands/count'
-    end
+    # def self.count
+    #   get 'brands/count'
+    # end
   end
 end

@@ -4,14 +4,10 @@
 
 module Bigcommerce
   class PaymentMethod < Resource
-    include Bigcommerce::Request.new 'payments/methods'
+    use_endpoint 'payments/methods'
 
     property :code
     property :name
     property :test_mode
-
-    def self.all(params = {})
-      get path.build, params
-    end
   end
 end

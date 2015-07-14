@@ -4,7 +4,7 @@
 
 module Bigcommerce
   class Category < Resource
-    include Bigcommerce::ResourceActions.new uri: 'categories/%d'
+    use_endpoint 'categories'
 
     property :id
     property :parent_id
@@ -22,8 +22,8 @@ module Bigcommerce
     property :search_keywords
     property :url
 
-    def self.count
-      get 'categories/count'
-    end
+    # def self.count
+    #   get 'categories/count'
+    # end
   end
 end

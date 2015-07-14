@@ -4,8 +4,8 @@
 
 module Bigcommerce
   class CustomField < Resource
-    include Bigcommerce::SubresourceActions.new(
-      uri: 'products/%d/custom_fields/%d')
+    include SubresourceActions
+    use_endpoint 'products/%d/custom_fields/%d'
 
     property :id
     property :product_id
@@ -13,12 +13,12 @@ module Bigcommerce
     property :name
     property :text
 
-    def self.count(product_id)
-      get "products/#{product_id}/custom_fields/count"
-    end
-
-    def self.count_all
-      get 'products/custom_fields/count'
-    end
+    # def self.count(product_id)
+    #   get "products/#{product_id}/custom_fields/count"
+    # end
+    #
+    # def self.count_all
+    #   get 'products/custom_fields/count'
+    # end
   end
 end

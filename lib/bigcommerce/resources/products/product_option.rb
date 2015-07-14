@@ -4,9 +4,8 @@
 
 module Bigcommerce
   class ProductOption < Resource
-    include Bigcommerce::SubresourceActions.new(
-      uri: 'products/%d/options/%d',
-      disable: [:create, :update, :destroy, :destroy_all])
+    include SubresourceActions
+    use_endpoint 'products/%d/options/%d'
 
     property :id
     property :option_id

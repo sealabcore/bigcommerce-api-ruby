@@ -4,8 +4,8 @@
 
 module Bigcommerce
   class OptionSetOption < Resource
-    include Bigcommerce::SubresourceActions.new(
-      uri: 'option_sets/%d/options/%d')
+    include SubresourceActions
+    use_endpoint 'option_sets/%d/options/%d'
 
     property :id
     property :option_id

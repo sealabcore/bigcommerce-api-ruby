@@ -4,8 +4,8 @@
 
 module Bigcommerce
   class OptionValue < Resource
-    include Bigcommerce::SubresourceActions.new uri: 'options/%d/values/%d'
-
+    include SubresourceActions
+    use_endpoint 'options/%d/values/%d'
     property :id
     property :option_id
     property :label

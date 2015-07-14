@@ -4,15 +4,14 @@
 
 module Bigcommerce
   class OptionSet < Resource
-    include Bigcommerce::ResourceActions.new uri: 'option_sets/%d'
-
+    use_endpoint 'option_sets'
     property :id
     property :name
     property :count
     property :options
 
-    def self.count
-      get 'option_sets/count'
-    end
+    # def self.count
+    #   get 'option_sets/count'
+    # end
   end
 end

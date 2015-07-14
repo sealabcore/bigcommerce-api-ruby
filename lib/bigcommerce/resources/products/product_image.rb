@@ -4,7 +4,8 @@
 
 module Bigcommerce
   class ProductImage < Resource
-    include Bigcommerce::SubresourceActions.new uri: 'products/%d/images/%d'
+    include SubresourceActions
+    use_endpoint 'products/%d/images/%d'
 
     property :id
     property :count
@@ -20,12 +21,12 @@ module Bigcommerce
     property :description
     property :date_created
 
-    def self.count(product_id)
-      get "products/#{product_id}/images/count"
-    end
-
-    def self.count_all
-      get 'products/images/count'
-    end
+    # def self.count(product_id)
+    #   get "products/#{product_id}/images/count"
+    # end
+    #
+    # def self.count_all
+    #   get 'products/images/count'
+    # end
   end
 end

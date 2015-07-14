@@ -4,8 +4,8 @@
 
 module Bigcommerce
   class Sku < Resource
-    include Bigcommerce::SubresourceActions.new uri: 'products/%d/skus/%d'
-
+    include SubresourceActions
+    use_endpoint 'products/%d/skus/%d'
     property :id
     property :product_id
     property :sku
@@ -18,12 +18,12 @@ module Bigcommerce
     property :options
     property :inventory_warning_level
 
-    def self.count_all
-      get 'products/skus/count'
-    end
-
-    def self.count(product_id)
-      get "products/#{product_id}/skus/count"
-    end
+    # def self.count_all
+    #   get 'products/skus/count'
+    # end
+    #
+    # def self.count(product_id)
+    #   get "products/#{product_id}/skus/count"
+    # end
   end
 end

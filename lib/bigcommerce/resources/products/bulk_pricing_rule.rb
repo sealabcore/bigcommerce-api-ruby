@@ -4,8 +4,8 @@
 
 module Bigcommerce
   class BulkPricingRule < Resource
-    include Bigcommerce::SubresourceActions.new(
-      uri: 'products/%d/discount_rules/%d')
+    include SubresourceActions
+    use_endpoint 'products/%d/discount_rules/%d'
 
     property :id
     property :count
@@ -15,12 +15,12 @@ module Bigcommerce
     property :type
     property :type_value
 
-    def self.count(product_id)
-      get "products/#{product_id}/discount_rules/count"
-    end
-
-    def self.count_all
-      get 'products/discount_rules/count'
-    end
+    # def self.count(product_id)
+    #   get "products/#{product_id}/discount_rules/count"
+    # end
+    #
+    # def self.count_all
+    #   get 'products/discount_rules/count'
+    # end
   end
 end

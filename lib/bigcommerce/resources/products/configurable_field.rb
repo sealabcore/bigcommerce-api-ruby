@@ -4,9 +4,8 @@
 
 module Bigcommerce
   class ConfigurableField < Resource
-    include Bigcommerce::SubresourceActions.new(
-      uri: 'products/%d/configurable_fields/%d',
-      disable: [:create, :update])
+    include SubresourceActions
+    use_endpoint 'products/%d/configurable_fields/%d'
 
     property :id
     property :product_id
@@ -19,12 +18,12 @@ module Bigcommerce
     property :is_required
     property :sort_order
 
-    def self.count(product_id)
-      get "products/#{product_id}/configurable_fields/count"
-    end
-
-    def self.count_all
-      get 'products/configurable_fields/count'
-    end
+    # def self.count(product_id)
+    #   get "products/#{product_id}/configurable_fields/count"
+    # end
+    #
+    # def self.count_all
+    #   get 'products/configurable_fields/count'
+    # end
   end
 end
