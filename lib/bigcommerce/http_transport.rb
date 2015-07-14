@@ -78,6 +78,7 @@ module Bigcommerce
           headers = headers.merge('X-Auth-Client' => config.client_id, 'X-Auth-Token' => config.access_token)
         end
         conn.headers = headers
+        conn.adapter Faraday.default_adapter
       end
     end
 
