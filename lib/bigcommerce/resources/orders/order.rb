@@ -4,7 +4,8 @@
 
 module Bigcommerce
   class Order < Resource
-    include Bigcommerce::ResourceActions.new uri: 'orders/%d'
+    # include Bigcommerce::ResourceActions.new uri: 'orders/%d'
+    use_endpoint 'orders'
 
     property :id
     property :count
@@ -66,8 +67,9 @@ module Bigcommerce
     property :shipping_addresses
     property :coupons
 
-    def self.count(params = {})
-      get 'orders/count', params
+    def orders_count(params = {})
+      p "#{self.class.endpoint}/count"
+      self.class.build_response_object(http_transport.get "#{self.class.endpoint}/count", params)
     end
   end
 end

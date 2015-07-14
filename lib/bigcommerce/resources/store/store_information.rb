@@ -4,6 +4,8 @@
 
 module Bigcommerce
   class StoreInfo < Resource
+    use_endpoint 'store'
+
     property :id
     property :domain
     property :name
@@ -28,8 +30,8 @@ module Bigcommerce
     property :plan_name
     property :logo
 
-    def self.info(http_transport)
-      build_response_object(http_transport.get 'store')
+    def info
+      self.class.build_response_object(http_transport.get self.class.endpoint)
     end
   end
 end

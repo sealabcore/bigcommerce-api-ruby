@@ -1,51 +1,31 @@
 module Bigcommerce
-  class ResourceActions < Module
-    attr_reader :options
-
-    def initialize(options = {})
-      @options = options
-      tap do |mod|
-        mod.define_singleton_method :_options do
-          mod.options
-        end
-      end
+  module ResourceActions
+    def all(params = {})
+      self.class.build_response_object(http_transport.get self.class.endpoint, params)
     end
 
-    def included(base)
-      base.send(:include, Request.new(options[:uri]))
-      base.extend(ClassMethods)
-      options[:disable_methods] ||= []
-      methods = ClassMethods.public_instance_methods & options[:disable_methods]
-      methods.each { |name| base.send(:remove_method, name) }
+    def find(resource_id)
+      fail ArgumentError if resource_id.nil?
+      self.class.build_response_object(http_transport.get "#{self.class.endpoint}/#{resource_id}")
     end
 
-    module ClassMethods
-      def all(params = {})
-        get path.build, params
-      end
+    def create(params)
+      self.class.build_response_object(http_transport.post self.class.endpoint, params)
+    end
 
-      def find(resource_id)
-        fail ArgumentError if resource_id.nil?
-        get path.build(resource_id)
-      end
+    def update(resource_id, params)
+      fail ArgumentError if resource_id.nil?
+      self.class.build_response_object(http_transport.put "#{self.class.endpoint}/#{resource_id}", params)
+    end
 
-      def create(params)
-        post path.build, params
-      end
+    def destroy(resource_id)
+      fail ArgumentError if resource_id.nil?
+      self.class.build_response_object(http_transport.delete "#{self.class.endpoint}/#{resource_id}")
+    end
 
-      def update(resource_id, params)
-        fail ArgumentError if resource_id.nil?
-        put path.build(resource_id), params
-      end
-
-      def destroy(resource_id)
-        fail ArgumentError if resource_id.nil?
-        delete path.build(resource_id)
-      end
-
-      def destroy_all
-        delete path.build
-      end
+    def destroy_all
+      self.class.build_response_object(http_transport.delete self.class.endpoint)
+      delete path.build
     end
   end
 end
