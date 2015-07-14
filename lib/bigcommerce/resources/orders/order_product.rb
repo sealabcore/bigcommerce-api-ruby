@@ -4,9 +4,8 @@
 
 module Bigcommerce
   class OrderProduct < Resource
-    include Bigcommerce::SubresourceActions.new(
-      uri: 'orders/%d/products/%d',
-      disable: [:create, :update, :destroy, :destroy_all])
+    include SubresourceActions
+    use_endpoint 'orders/%d/products/%d'
 
     property :id
     property :order_id
@@ -53,12 +52,12 @@ module Bigcommerce
     property :product_options
     property :configurable_fields
 
-    def self.count(order_id)
-      get "orders/#{order_id}/products/count"
-    end
-
-    def self.count_all
-      get 'orders/products/count'
-    end
+    # def self.count(order_id)
+    #   get "orders/#{order_id}/products/count"
+    # end
+    #
+    # def self.count_all
+    #   get 'orders/products/count'
+    # end
   end
 end

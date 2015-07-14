@@ -4,7 +4,8 @@
 
 module Bigcommerce
   class Shipment < Resource
-    include Bigcommerce::SubresourceActions.new uri: 'orders/%d/shipments/%d'
+    include SubresourceActions
+    use_endpoint 'orders/%d/shipments/%d'
 
     property :id
     property :order_id
@@ -19,12 +20,12 @@ module Bigcommerce
     property :shipping_address
     property :items
 
-    def self.count(order_id)
-      get "orders/#{order_id}/shipments/count"
-    end
-
-    def self.count_all
-      get 'orders/shipments/count'
-    end
+    # def self.count(order_id)
+    #   get "orders/#{order_id}/shipments/count"
+    # end
+    #
+    # def self.count_all
+    #   get 'orders/shipments/count'
+    # end
   end
 end

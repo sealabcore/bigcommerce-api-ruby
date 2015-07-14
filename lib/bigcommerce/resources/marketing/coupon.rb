@@ -5,7 +5,7 @@
 
 module Bigcommerce
   class Coupon < Resource
-    include Bigcommerce::ResourceActions.new uri: 'coupons/%d'
+    use_endpoint 'coupons'
 
     property :id
     property :name
@@ -23,8 +23,8 @@ module Bigcommerce
     property :restricted_to
     property :shipping_methods
 
-    def self.count
-      get 'coupons/count'
-    end
+    # def self.count
+    #   get 'coupons/count'
+    # end
   end
 end

@@ -4,9 +4,8 @@
 
 module Bigcommerce
   class OrderShippingAddress < Resource
-    include Bigcommerce::SubresourceActions.new(
-      uri: 'orders/%d/shipping_addresses/%d',
-      disable: [:create, :update, :destroy, :destroy_all])
+    include SubresourceActions
+    use_endpoint 'orders/%d/shipping_addresses/%d'
 
     property :id
     property :order_id
@@ -39,12 +38,12 @@ module Bigcommerce
     property :shipping_zone_id
     property :shipping_zone_name
 
-    def self.count(order_id)
-      get "orders/#{order_id}/shipping_addresses/count"
-    end
-
-    def self.count_all
-      get 'orders/shipping_addresses/count'
-    end
+    # def self.count(order_id)
+    #   get "orders/#{order_id}/shipping_addresses/count"
+    # end
+    #
+    # def self.count_all
+    #   get 'orders/shipping_addresses/count'
+    # end
   end
 end

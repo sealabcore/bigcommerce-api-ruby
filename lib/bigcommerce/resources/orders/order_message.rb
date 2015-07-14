@@ -4,9 +4,8 @@
 
 module Bigcommerce
   class OrderMessage < Resource
-    include Bigcommerce::SubresourceActions.new(
-      uri: 'orders/%d/messages/%d',
-      disable: [:create, :update, :destroy, :destroy_all])
+    include SubresourceActions
+    use_endpoint 'orders/%d/messages/%d'
 
     property :id
     property :order_id
