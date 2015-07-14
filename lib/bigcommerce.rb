@@ -3,8 +3,9 @@ require 'bigcommerce/version'
 require 'bigcommerce/http_transport'
 require 'bigcommerce/resources/resource'
 
-resources = File.join(File.dirname(__FILE__), 'bigcommerce', 'resources', '**', '*.rb')
-Dir.glob(resources, &method(:require))
+# resources = File.join(File.dirname(__FILE__), 'bigcommerce', 'resources', '**', '*.rb')
+# Dir.glob(resources, &method(:require))
+require 'bigcommerce/resources/store/store_information'
 
 module Bigcommerce
 

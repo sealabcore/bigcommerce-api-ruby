@@ -37,6 +37,7 @@ module Bigcommerce
     #     path_builder
     #   end
     # end
+    attr_reader :config
 
     def initialize
       @config = Hashie::Mash.new
@@ -74,7 +75,7 @@ module Bigcommerce
         if config.auth == 'legacy'
           conn.basic_auth(config.username, config.api_key)
         else
-          headers.merge!('X-Auth-Client' => config.client_id, 'X-Auth-Token' => config.access_token)
+          headers = headers.merge('X-Auth-Client' => config.client_id, 'X-Auth-Token' => config.access_token)
         end
         conn.headers = headers
       end
