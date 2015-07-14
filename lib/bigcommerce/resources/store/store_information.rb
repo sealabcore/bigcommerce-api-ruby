@@ -4,8 +4,6 @@
 
 module Bigcommerce
   class StoreInfo < Resource
-    include Bigcommerce::Request.new 'store'
-
     property :id
     property :domain
     property :name
@@ -30,8 +28,8 @@ module Bigcommerce
     property :plan_name
     property :logo
 
-    def self.info
-      get path.build
+    def self.info(http_transport)
+      build_response_object(http_transport.get '/store')
     end
   end
 end

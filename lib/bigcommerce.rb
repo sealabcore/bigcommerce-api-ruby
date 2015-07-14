@@ -1,5 +1,6 @@
 require 'hashie'
 require 'bigcommerce/version'
+require 'bigcommerce/http_transport'
 require 'bigcommerce/resources/resource'
 
 resources = File.join(File.dirname(__FILE__), 'bigcommerce', 'resources', '**', '*.rb')
