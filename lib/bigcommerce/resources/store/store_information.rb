@@ -29,7 +29,7 @@ module Bigcommerce
     property :logo
 
     def self.info(http_transport)
-      build_response_object(http_transport.get '/store')
+      build_response_object(http_transport.get 'store')
     end
   end
 end
