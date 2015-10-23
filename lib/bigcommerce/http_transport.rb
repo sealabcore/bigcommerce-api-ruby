@@ -70,7 +70,7 @@ module Bigcommerce
     def connection
       ssl_options = config.ssl if config.auth == 'legacy'
       headers = Bigcommerce::HEADERS
-      @connection ||= Faraday.new(url: build_url, ssl: ssl_options) do |conn|
+      @connection ||= Faraday.new(url: build_url, ssl: ssl_options, request: {open_timeout: 2, timeout: 10}) do |conn|
         conn.request :json
         if config.auth == 'legacy'
           conn.basic_auth(config.username, config.api_key)
